@@ -8,10 +8,10 @@ unsigned int setBits(unsigned int x,
                      unsigned int p,    
                      unsigned int n,    
                      unsigned int y){   
+    int bitfields = sizeof(int) * 8;
     if((2*n) > bitfields){
         return 0;
     };
-    int bitfields = sizeof(int) * 8;
     x <<= (bitfields-p);
     x >>= (bitfields-n);
     x <<= n;
