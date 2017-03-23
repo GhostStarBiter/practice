@@ -12,9 +12,9 @@ unsigned int setBits(unsigned int x,
         return 0;
     };
     int bitfields = sizeof(int) * 8;
-    x<<=(bitfields-p);
-    x>>=(bitfields-n);
-    x<<=n;
+    x <<= (bitfields-p);
+    x >>= (bitfields-n);
+    x <<= n;
     int bitmask = ((~0 >> (bitfields - n)) << n);
-    return (x|(y & ~bitmask));
+    return (x | (y & ~bitmask));
 }
