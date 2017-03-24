@@ -1,20 +1,26 @@
 /*
-** From given 'x' from 'p' position 'n' bits are taken
-** and placed on the left to 'n' rightmost bits of 'y'.
-** Other bits unchanged.
-*/
-
-unsigned int setBits(unsigned int x,    
-                     unsigned int p,    
-                     unsigned int n,    
-                     unsigned int y){   
+ *                          x                        
+ *          |________|********|________|________|
+ *     (bitfields) (p+n)     (p)               (0)
+ * 
+ *                          y
+ *                            (replaced)
+ *          |________|________|********|________|
+ *      (bitfields)         (n+n)     (n)      (0)
+ * 
+ */
+unsigned int replaceBits(unsigned int x,
+                         unsigned int p,
+                         unsigned int n,
+                         unsigned int y){
     int bitfields = sizeof(int) * 8;
-    if((2*n) > bitfields || (p < n) || (p > bitfields)){
+    if((2*n) > bitfields || (p+n) > bitfields || (p > bitfields))
         return 1;
-    };
-    x <<= (bitfields-p);
+    x <<= (bitfields-(p+n));
     x >>= (bitfields-n);
     x <<= n;
-    int bitmask = ((~0 >> (bitfields - n)) << n);
+    unsigned int bitmask = ~0;
+    bitmask >>= (bitfields-n);
+    bitmask <<=n;
     return (x | (y & ~bitmask));
 }
